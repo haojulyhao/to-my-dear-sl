@@ -54,6 +54,13 @@ def sum_worktime(commits):
 
     return duration
 
+def serialize(obj):
+    """JSON serializer for objects not serializable by default json code"""
+    if isinstance(obj, datetime.datetime):
+        return obj.strftime("%Y-%m-%d %H:%M:%S")
+
+    return obj.__dict__
+
 
 ret = sum_worktime(json.load(fp))
-print(json.dumps(ret))
+print(json.dumps(ret, default=serialize))

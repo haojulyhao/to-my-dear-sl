@@ -86,6 +86,8 @@ for name in data:
             o.lieu = chinese_calendar.is_in_lieu(o.start) 
             if not o.workday:
                 o.holiday, o.holiday_name = chinese_calendar.get_holiday_detail(o.start)
+                if not o.holiday_name:
+                    o.holiday_name = o.start.weekday()+1
 
 
 def serialize(obj):
