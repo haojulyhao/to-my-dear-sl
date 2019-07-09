@@ -7,8 +7,7 @@ import datetime
 
 parser = argparse.ArgumentParser()
 parser.add_argument('filename', metavar='FILE', nargs='?')
-parser.add_argument('start', default='09:00', nargs='*') 
-parser.add_argument('end', default='17:00', nargs='*') 
+parser.add_argument('--user','-u', nargs='?')
 args = parser.parse_args()
 
 fp = None
@@ -37,6 +36,8 @@ def sum_worktime(commits):
     commits.sort(key=lambda x:x['date'])
     for commit in commits:
         name = commit['author']['name']
+        if args.user and args.user != name:
+            continue
         date = dateutil.parser.parse(commit['date'])
         day = date.strftime("%Y-%m-%d")
         if name not in duration:
